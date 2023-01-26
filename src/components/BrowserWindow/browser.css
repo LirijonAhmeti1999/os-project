@@ -1,0 +1,12 @@
+.browser-box {
+  width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+}
+
+.browser-box input {
+  width: 100%;
+  padding: 8px 0px;
+}

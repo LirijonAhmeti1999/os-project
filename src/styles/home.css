@@ -1,0 +1,16 @@
+.battery-life-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.battery-life-icon svg {
+  width: 20px;
+}
+
+.buttons-wrapper {
+  margin: 20px 0px 0px 0px;
+}
+
+.buttons-wrapper button {
+  margin: 0px 10px;
+}
