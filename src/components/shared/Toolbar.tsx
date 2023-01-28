@@ -1,18 +1,18 @@
 import { CurrentTime } from "@components/CurrentTime/CurrentTime";
 import { Icon } from "./Icon/Icon";
-import { Switch } from "@headlessui/react";
+// import { Switch } from "@headlessui/react";
 
-import { useUIContext } from "@context/UIContext/UIContext";
+// import { useUIContext } from "@context/UIContext/UIContext";
 
 export const Toolbar = () => {
-  const { darkMode, toggleDarkMode } = useUIContext();
+  // const { darkMode, toggleDarkMode } = useUIContext();
 
   return (
     <div className="flex justify-between bg-gray-300 px-3 font-semibold">
       <p>Preferences</p>
 
       <div className="flex">
-        <Switch.Group>
+        {/* <Switch.Group>
           <Switch.Label className="mr-4">Dark Mode</Switch.Label>
 
           <Switch
@@ -28,7 +28,7 @@ export const Toolbar = () => {
               } inline-block h-4 w-4 transform rounded-full bg-white transition`}
             />
           </Switch>
-        </Switch.Group>
+        </Switch.Group> */}
         <span className="flex align-middle justify-center pr-4">
           75% <Icon icon="battery-life" className="battery-life-icon pl-1" />
         </span>
