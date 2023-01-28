@@ -15,7 +15,9 @@ export const Input = ({ hasError, error, className, ...inputProps }: Props) => {
           className
         )}
       />
-      {hasError && <p className="w-full text-red-500 font-semibold">{error}</p>}
+      {hasError && (
+        <p className="w-full text-red-500 font-semibold text-center">{error}</p>
+      )}
     </>
   );
 };
