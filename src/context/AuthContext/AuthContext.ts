@@ -1,17 +1,34 @@
 import { createContext, useContext } from "react";
 
-export interface AuthContextValues {
-  isAuthenticated: boolean;
-  login: () => void;
-  logout: () => void;
+export type OptionalUserFields = Partial<UserFields>;
+
+export interface UserFields {
+  name: string;
+  email: string;
 }
 
-const AuthContext = createContext<AuthContextValues>({
-  isAuthenticated: false,
+export interface AuthContextValues {
+  login: () => void;
+  logOut: () => void;
+  user: UserFields | null;
+  isAuthenticated: boolean;
+  updateUser: (fields: OptionalUserFields) => void;
+}
+
+export const AuthContext = createContext<AuthContextValues>({
+  user: null,
   login: () => {},
-  logout: () => {},
+  logOut: () => {},
+  updateUser: () => {},
+  isAuthenticated: false,
 });
 
-export const useAuthContext = () => useContext(AuthContext);
+export const useAuthContext = () => {
+  if (!AuthContext) {
+    throw new Error("useAuthContext must be used within AuthContext");
+  }
 
-export const AuthProvider = AuthContext.Provider;
+  return useContext(AuthContext);
+};
+
+export const { Provider } = AuthContext;

@@ -1,45 +1,84 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
-import { AuthContextValues, AuthProvider } from "./AuthContext";
+import {
+  UserFields,
+  AuthContext,
+  AuthContextValues,
+  OptionalUserFields,
+} from "./AuthContext";
 
 interface Props {
   children: React.ReactNode;
 }
 
-export const AuthContextProvider = ({ children }: Props) => {
-  const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    const storageValue = localStorage.getItem("authenticated");
+export const AuthContextProvider = (props: Props) => {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<UserFields | null>(null);
 
-    return storageValue != null;
-  });
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const storageValue = localStorage.getItem("authenticated");
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
+      try {
+        if (!storageValue || storageValue === "false") {
+          return;
+        }
 
-    localStorage.setItem("authenticated", JSON.stringify(true));
+        setUser({
+          email: "borgoth@mordos.com",
+          name: "Borgoth",
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    navigate({
-      pathname: "/",
+    void checkAuthentication();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const updateUser = (fields?: OptionalUserFields) => {
+    if (!fields) {
+      return;
+    }
+
+    setUser((prev) => {
+      return { ...prev, ...fields } as UserFields;
     });
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-
+  const logOut = () => {
     localStorage.removeItem("authenticated");
+    setUser(null);
+  };
 
-    navigate({
-      pathname: "/login",
+  const login = () => {
+    localStorage.setItem("authenticated", "true");
+
+    setUser({
+      email: "borgoth@mordos.com",
+      name: "Borgoth",
     });
   };
 
-  const contextValues: AuthContextValues = {
-    isAuthenticated,
-    login: handleLogin,
-    logout: handleLogout,
+  const context: AuthContextValues = {
+    user,
+    login,
+    logOut,
+    updateUser,
+    isAuthenticated: user !== null,
   };
 
-  return <AuthProvider value={contextValues}>{children}</AuthProvider>;
+  return (
+    <AuthContext.Provider value={context}>
+      {loading ? (
+        <div className="flex items-center justify-center h-screen">
+          Loading...
+        </div>
+      ) : (
+        props.children
+      )}
+    </AuthContext.Provider>
+  );
 };
