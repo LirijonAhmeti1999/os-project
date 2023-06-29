@@ -14,7 +14,7 @@ This project is done using [React](https://reactjs.org/) with [TypeScript](https
 
 ## Live Version
 
-TO DO: Deploy to Netlify https://63d2ad406c033909402a3367--silly-selkie-3bb49c.netlify.app/
+Netlify link: https://harmonious-crostata-54db99.netlify.app
 
 ## Getting Started
 
